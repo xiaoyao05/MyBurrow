@@ -12,7 +12,7 @@ import {
 import { FaTrashAlt } from "react-icons/fa";
 import ConfirmModal from "./ConfirmModal";
 import ProfileAvatar from "./ProfileAvatar";
-import httpClient from "../httpClient";
+import httpClient, { getWebSocketUrl } from "../httpClient";
 
 function formatBubbleTime(value) {
   if (!value) return "";
@@ -265,9 +265,7 @@ export default function ChatRoom({ roomId, currentUserId }) {
     const token = localStorage.getItem("token");
     if (!token) return;
 
-    const ws = new WebSocket(
-      `ws://localhost:8000/chat/ws/${roomId}?token=${token}`
-    );
+    const ws = new WebSocket(getWebSocketUrl(`/chat/ws/${roomId}?token=${token}`));
 
     socketRef.current = ws;
 

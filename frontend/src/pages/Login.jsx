@@ -7,10 +7,8 @@ import {Link, useNavigate} from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { IoEye, IoEyeOff } from "react-icons/io5";
 import "../styles/Login.css";
-import httpClient from "../httpClient";
+import httpClient, { API_URL } from "../httpClient";
 import MyBurrow from "/assets/MyBurrow.png";
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
 
 function getInitialGoogleError() {
   const hashParams = new URLSearchParams(window.location.hash.slice(1));
@@ -77,7 +75,7 @@ export default function Login() {
   }
 
   function handleGoogleLogin() {
-    window.location.href = `${API_BASE_URL}/api/auth/google/login`;
+    window.location.href = `${API_URL}/api/auth/google/login`;
   }
 
   return (
