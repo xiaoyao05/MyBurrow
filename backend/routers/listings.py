@@ -11,14 +11,10 @@ from backend.models.reservation import Reservation
 from backend.schemas import ListingCreate
 from backend.schemas.ListingCreate import ListingAvailabilityUpdate, ListingOut
 from backend.routers.auth import get_current_user
+from backend.services.storage import get_supabase_client
 from backend.enums.ListingStatus import ListingStatus
 from backend.enums.ReservationStatus import ReservationStatus
-import uuid, supabase, os
-
-supabase = supabase.create_client(
-    os.getenv("SUPABASE_URL"),
-    os.getenv("SUPABASE_SERVICE_KEY")
-)
+import uuid
 
 router = APIRouter(
     prefix="/listings",
@@ -401,6 +397,7 @@ async def upload_listing_file(listing_id: int, file: UploadFile):
     file_name = f"{uuid.uuid4()}.{file_extension}"
     file_path = f"listings/{listing_id}/{file_name}"
     file_bytes = await file.read()
+    supabase = get_supabase_client()
 
     supabase.storage.from_(BUCKET_NAME).upload(
         file_path,

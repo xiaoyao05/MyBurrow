@@ -5,17 +5,11 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi import Depends, APIRouter, File, UploadFile
 from fastapi import HTTPException
-import os
 import uuid
-import supabase
+from backend.services.storage import get_supabase_client
 from backend.routers.auth import get_current_user
 
 BUCKET_NAME = "profile-picture"
-
-supabase = supabase.create_client(
-    os.getenv("SUPABASE_URL"),
-    os.getenv("SUPABASE_SERVICE_KEY")
-)
 
 class UserProfile(BaseModel):
     name: str
@@ -110,6 +104,7 @@ async def upload_profile_picture(
     file_name = f"{uuid.uuid4()}.{file_extension}"
     file_path = f"profiles/{user_id}/{file_name}"
     file_bytes = await file.read()
+    supabase = get_supabase_client()
 
     supabase.storage.from_(BUCKET_NAME).upload(
         file_path,
