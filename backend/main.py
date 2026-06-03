@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from sqlalchemy import text
+from backend.core.config import settings
 from backend.routers import activity, ai, auth, calendar, listings, profile, chat, saved_listings, reviews, mcp_context
 from backend.db.database import engine, Base
 
@@ -115,12 +116,15 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
+default_allowed_origins = [
+    "http://localhost:5173",
+    "https://myburrow.vercel.app",
+    "https://myburrow-k9fsmb32m-xiaoyao05s-projects.vercel.app",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "https://myburrow.vercel.app"
-    ],
+    allow_origins=settings.ALLOWED_ORIGINS or default_allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

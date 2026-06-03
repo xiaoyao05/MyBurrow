@@ -12,14 +12,16 @@ class Settings(BaseSettings):
 
     DATABASE_URL: str 
 
-    ALLOWED_ORIGINS: str = ""
+    ALLOWED_ORIGINS: List[str] = []
 
     OPENAI_API_KEY: Optional[str] = None
     OPENAI_MODEL: str = "gpt-4.1-mini"
 
-    @field_validator("ALLOWED_ORIGINS")
-    def parse_allowed_origins(cls, v:str) ->  List[str]:
-        return v.split(",") if v else []
+    @field_validator("ALLOWED_ORIGINS", mode="before")
+    def parse_allowed_origins(cls, v) -> List[str]:
+        if isinstance(v, str):
+            return [origin.strip() for origin in v.split(",") if origin.strip()]
+        return v
     
     class Config:
         env_file = BACKEND_DIR / ".env"
