@@ -1,0 +1,996 @@
+.chat-shell {
+  min-height: 100svh;
+  background: #f4f0e7;
+}
+
+.chat-list-page,
+.chat-room-page {
+  width: min(920px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 24px 0;
+}
+
+.chat-list-panel,
+.chat-room {
+  min-height: calc(100svh - 112px);
+  overflow: hidden;
+  border: 1px solid #ded6c7;
+  border-radius: 8px;
+  background: #fffdf8;
+  box-shadow: 0 14px 32px rgba(53, 39, 20, 0.08);
+}
+
+.chat-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px 24px 16px;
+  background-color: #ead4ab;
+  color: #2c2217;
+}
+
+.chat-list-header h1,
+.chat-room-header h1 {
+  margin: 0;
+  color: #2c2217;
+  font-size: 20px;
+  line-height: 1.1;
+  letter-spacing: 0;
+  margin-top: 5px;
+}
+
+.chat-list-header p,
+.chat-room-header p {
+  margin-top: 2px;
+  font-size: 13px;
+  color: #6c5f4c;
+}
+
+.chat-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 14px 16px;
+  padding: 10px 14px;
+  border: 1px solid #e7dfd1;
+  border-radius: 999px;
+  background: #f8f3ea;
+  color: #8a7a62;
+}
+
+.chat-search input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #2c2217;
+  font-size: 15px;
+}
+
+.chat-card-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 76px;
+  padding: 12px 18px;
+  color: inherit;
+  border-top: 1px solid #efe8dc;
+  transition: background 0.2s ease;
+}
+
+.chat-card:hover {
+  background: #f8f0e2;
+}
+
+.chat-card-link {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  gap: 14px;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.chat-card-link:focus-visible,
+.chat-card-delete-button:focus-visible {
+  outline: none;
+}
+
+.chat-card-delete-button {
+  flex: 0 0 34px;
+  display: inline-grid;
+  place-items: center;
+  width: 10px;
+  height: 25px;
+  border: 1px solid #d92d20;
+  border-radius: 6px;
+  background: #d92d20;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.chat-card-delete-button:hover,
+.chat-card-delete-button:focus-visible {
+  background: #b42318;
+  border-color: #b42318;
+}
+
+.chat-card-delete-button svg {
+  width: 15px;
+  height: 15px;
+  fill: #ffffff;
+}
+
+.chat-avatar {
+  flex: 0 0 48px;
+}
+
+.chat-card-main {
+  min-width: 0;
+  flex: 1;
+}
+
+.chat-card-top,
+.chat-card-bottom {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: space-between;
+}
+
+.chat-card h3 {
+  overflow: hidden;
+  margin: 0;
+  color: #241b12;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chat-card time {
+  flex: 0 0 auto;
+  color: #8a7a62;
+  font-size: 12px;
+}
+
+.chat-card-subtitle {
+  margin-top: 1px;
+  color: #8a7a62;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.chat-card p {
+  overflow: hidden;
+  color: #6f6659;
+  font-size: 14px;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chat-muted {
+  color: #a2937c;
+}
+
+.chat-unread-count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: #25d366;
+  color: #063d1d;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.chat-room {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-room-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex: 0 0 auto;
+  padding: 0;
+  border-bottom: 1px solid #ded6c7;
+  background: #ead4ab;
+}
+
+.chat-room-person {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 8px;
+  color: inherit;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+a.chat-room-person {
+  padding: 6px 8px;
+  margin: -6px -8px;
+}
+
+.chat-room-header-link {
+  flex: 1;
+  align-self: stretch;
+  width: 100%;
+  padding: 14px 18px;
+}
+
+a.chat-room-header-link {
+  margin: 0;
+}
+
+a.chat-room-person:hover,
+a.chat-room-person:focus-visible {
+  background: rgba(255, 255, 255, 0.36);
+  outline: none;
+}
+
+.chat-room-avatar {
+  flex: 0 0 42px;
+}
+
+.chat-room-person > svg {
+  width: 50px;
+  height: 50px;
+  color: #6f4f28;
+}
+
+.chat-room-actions,
+.owner-reservation-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.reservation-primary-button,
+.reservation-secondary-button,
+.reservation-calendar-button,
+.owner-reservation-actions button,
+.reservation-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 38px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 0 12px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.reservation-primary-button,
+.reservation-calendar-button,
+.owner-reservation-actions button {
+  background: #5e7f58;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.reservation-primary-button:disabled,
+.reservation-calendar-button:disabled,
+.owner-reservation-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.52;
+}
+
+.reservation-primary-button svg,
+.reservation-calendar-button svg,
+.owner-reservation-actions button svg,
+.reservation-secondary-button svg,
+.reservation-pill svg {
+  flex: 0 0 auto;
+  width: 17px;
+  height: 17px;
+}
+
+.owner-reservation-actions .reservation-danger-button {
+  background: #9f4d45;
+}
+
+.reservation-secondary-button {
+  border-color: #d7cbb9;
+  background: #fffaf2;
+  color: #4c3b27;
+  cursor: pointer;
+}
+
+.reservation-pill {
+  max-width: 260px;
+  border-color: rgba(95, 71, 41, 0.16);
+  background: rgba(255, 250, 242, 0.74);
+  color: #4c3b27;
+}
+
+.reservation-pill span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.reservation-inline-error {
+  margin: 0;
+  padding: 10px 18px;
+  border-bottom: 1px solid #f2d1ce;
+  background: #fff4f2;
+  color: #b42318;
+  font-size: 14px;
+}
+
+.reservation-inline-success {
+  margin: 0;
+  padding: 10px 18px;
+  border-bottom: 1px solid #dbe9d4;
+  background: #f4fbf0;
+  color: #3b6c2e;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.chat-reservation-dock {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex: 0 0 auto;
+  padding: 10px 14px;
+  border-top: 1px solid #d8c9b3;
+  background: #fff8ed;
+  box-shadow: 0 -8px 18px rgba(53, 39, 20, 0.06);
+}
+
+.chat-reservation-dock-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  color: #4c3b27;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.chat-reservation-dock-summary svg {
+  flex: 0 0 auto;
+  width: 17px;
+  height: 17px;
+}
+
+.chat-reservation-dock-summary span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chat-reservation-dock-actions {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.chat-reservation-dock-controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.chat-messages {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 18px;
+  background:
+    linear-gradient(rgba(244, 240, 231, 0.86), rgba(244, 240, 231, 0.86)),
+    repeating-linear-gradient(
+      45deg,
+      transparent 0,
+      transparent 18px,
+      rgba(111, 79, 40, 0.06) 18px,
+      rgba(111, 79, 40, 0.06) 19px
+    );
+}
+
+.message-row {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.message-row-own {
+  justify-content: flex-end;
+}
+
+.message-bubble {
+  max-width: min(70%, 620px);
+  padding: 8px 10px 6px;
+  border-radius: 8px 8px 8px 2px;
+  background: #ffffff;
+  color: #211b14;
+  box-shadow: 0 1px 2px rgba(53, 39, 20, 0.12);
+  cursor: context-menu;
+}
+
+.message-own {
+  border-radius: 8px 8px 2px 8px;
+  background: #dcf8c6;
+}
+
+.message-bubble p {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.chat-message-link {
+  color: #8c5a19;
+  font-weight: 800;
+}
+
+.message-bubble span {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  margin-top: 2px;
+  color: #81776a;
+  font-size: 11px;
+  line-height: 1;
+}
+
+.message-bubble svg {
+  color: #34b7f1;
+}
+
+.message-context-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 39;
+  border: 0;
+  background: transparent;
+  cursor: default;
+}
+
+.message-context-menu {
+  position: fixed;
+  z-index: 40;
+  display: grid;
+  min-width: 132px;
+  overflow: hidden;
+  border: 1px solid #ded6c7;
+  border-radius: 8px;
+  background: #fffdf8;
+  box-shadow: 0 14px 32px rgba(29, 21, 12, 0.2);
+}
+
+.message-context-menu button {
+  border: 0;
+  background: transparent;
+  color: #241b12;
+  padding: 10px 12px;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.message-context-menu button:hover,
+.message-context-menu button:focus-visible {
+  background: #f8f0e2;
+  outline: none;
+}
+
+.chat-composer {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  padding: 12px 14px;
+  border-top: 1px solid #ded6c7;
+  background: #f0e5d2;
+}
+
+.chat-composer-main {
+  display: grid;
+  flex: 1;
+  gap: 6px;
+  min-width: 0;
+}
+
+.chat-editing-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 10px;
+  border: 1px solid #ead8bc;
+  border-radius: 8px;
+  background: #fff8ed;
+  color: #4f3d23;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.chat-composer .chat-editing-banner button {
+  flex: 0 0 auto;
+  width: auto;
+  height: auto;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #8c5a19;
+  padding: 4px 6px;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.chat-composer .chat-editing-banner button:hover,
+.chat-composer .chat-editing-banner button:focus-visible {
+  background: #f8f1e5;
+  outline: none;
+}
+
+.chat-composer textarea {
+  min-height: 22px;
+  max-height: 120px;
+  resize: none;
+  border: 0;
+  border-radius: 20px;
+  outline: 0;
+  padding: 10px 14px;
+  background: #ffffff;
+  color: #211b14;
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.chat-ai-draft-error {
+  margin: 0;
+  color: #b42318;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.chat-ai-draft-preview {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid #ead8bc;
+  border-radius: 8px;
+  background: #fff8ed;
+}
+
+.chat-ai-draft-preview p {
+  margin: 0;
+  color: #211b14;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.chat-ai-draft-preview div {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.chat-composer .chat-ai-draft-preview button {
+  flex: 0 0 auto;
+  width: auto;
+  height: 34px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: #b1eda6;
+  color: #000000;
+  padding: 0 14px;
+  font-size: 13px;
+  font-weight: 800;
+  box-shadow: 0 4px 10px rgba(91, 126, 84, 0.16);
+  transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+}
+
+.chat-composer .chat-ai-draft-preview button:hover,
+.chat-composer .chat-ai-draft-preview button:focus-visible {
+  background: #a1cd9a;
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.chat-composer .chat-ai-draft-preview button:last-child {
+  border: 1px solid transparent;
+  background: #ffffff;
+  color: #000000;
+  box-shadow: none;
+}
+
+.chat-composer .chat-ai-draft-preview button:last-child:hover,
+.chat-composer .chat-ai-draft-preview button:last-child:focus-visible {
+  outline: none;
+  background: #f8f1e5;
+  transform: translateY(-1px);
+}
+
+.chat-composer button,
+.chat-back-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat-composer button {
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: #25d366;
+  color: #053d1c;
+  cursor: pointer;
+}
+
+.chat-composer .chat-ai-draft-button {
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 82px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: #fffaf3;
+  color: #4f3d23;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.chat-composer button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.chat-composer button svg {
+  width: 20px;
+  height: 20px;
+}
+
+.chat-back-link {
+  gap: 8px;
+  margin-bottom: 12px;
+  color: #5d4528;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.chat-state {
+  padding: 24px;
+  color: #6f6659;
+}
+
+.chat-error {
+  color: #b42318;
+}
+
+.chat-empty {
+  display: grid;
+  min-height: 320px;
+  place-items: center;
+  align-content: center;
+  padding: 24px;
+  color: #6f6659;
+  text-align: center;
+}
+
+.chat-empty svg {
+  width: 58px;
+  height: 58px;
+  margin-bottom: 10px;
+  color: #b79562;
+}
+
+.chat-empty h2 {
+  margin: 0 0 4px;
+}
+
+.reservation-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(28, 22, 15, 0.42);
+}
+
+.reservation-modal {
+  width: min(440px, 100%);
+  border: 1px solid #ded6c7;
+  border-radius: 8px;
+  background: #fffdf8;
+  box-shadow: 0 24px 64px rgba(29, 21, 12, 0.22);
+}
+
+.message-delete-modal {
+  width: min(420px, 100%);
+  border: 1px solid #ded6c7;
+  border-radius: 8px;
+  background: #fffdf8;
+  box-shadow: 0 24px 64px rgba(29, 21, 12, 0.22);
+}
+
+.message-delete-modal > header,
+.message-delete-modal > footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px;
+}
+
+.message-delete-modal > header {
+  border-bottom: 1px solid #eee3d3;
+}
+
+.message-delete-modal > header h2 {
+  margin: 0;
+  color: #241b12;
+  font-size: 20px;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.message-delete-modal > header p {
+  margin-top: 4px;
+  color: #6f6659;
+  font-size: 14px;
+}
+
+.message-delete-modal > footer {
+  border-top: 1px solid #eee3d3;
+}
+
+.message-delete-options {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+}
+
+.message-delete-options label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #241b12;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.message-delete-options input {
+  width: 16px;
+  height: 16px;
+  accent-color: #9f4d45;
+}
+
+.message-delete-option-disabled {
+  color: #9a8d7b;
+}
+
+.message-delete-confirm-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 38px;
+  border: 1px solid #d92d20;
+  border-radius: 8px;
+  padding: 0 12px;
+  background: #d92d20;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.message-delete-confirm-button:hover,
+.message-delete-confirm-button:focus-visible {
+  background: #b42318;
+  border-color: #b42318;
+  outline: none;
+}
+
+.message-delete-confirm-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.52;
+}
+
+.reservation-modal > header,
+.reservation-modal > footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px;
+}
+
+.reservation-modal > header {
+  border-bottom: 1px solid #eee3d3;
+}
+
+.reservation-modal > header h2 {
+  margin: 0;
+  color: #241b12;
+  font-size: 20px;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.reservation-modal > header p {
+  margin-top: 4px;
+  color: #6f6659;
+  font-size: 14px;
+}
+
+.reservation-modal > footer {
+  border-top: 1px solid #eee3d3;
+}
+
+.reservation-icon-button {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 34px;
+  width: 34px;
+  height: 34px;
+  border: 1px solid #d8cdbd;
+  border-radius: 8px;
+  background: #fffaf2;
+  color: #4c3b27;
+  cursor: pointer;
+}
+
+.reservation-icon-button svg {
+  width: 18px;
+  height: 18px;
+}
+
+.reservation-calendar-toolbar {
+  display: grid;
+  grid-template-columns: 34px 1fr 34px;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px 10px;
+  color: #2c2217;
+  text-align: center;
+}
+
+.reservation-weekdays,
+.reservation-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+  padding: 0 16px;
+}
+
+.reservation-weekdays {
+  color: #7c6d58;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.reservation-calendar-grid {
+  padding-bottom: 16px;
+}
+
+.reservation-day {
+  aspect-ratio: 1;
+  border: 1px solid #e5dccf;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #241b12;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.reservation-day:hover,
+.reservation-day:focus-visible {
+  border-color: #6f4f28;
+  outline: none;
+}
+
+.reservation-day:disabled {
+  border-color: #eadeda;
+  background: #f2ebe4;
+  color: #ad9c88;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.reservation-day-in-range {
+  border-color: #a8c1a1;
+  background: #edf6e9;
+}
+
+.reservation-day-selected {
+  border-color: #5e7f58;
+  background: #5e7f58;
+  color: #ffffff;
+}
+
+@media (max-width: 700px) {
+  .chat-list-page,
+  .chat-room-page {
+    width: 100%;
+    padding: 0;
+  }
+
+  .chat-list-panel,
+  .chat-room {
+    min-height: calc(100svh - 64px);
+    border-width: 0;
+    border-radius: 0;
+  }
+
+  .chat-back-link {
+    margin: 12px 16px;
+  }
+
+  .chat-room-page .chat-room {
+    min-height: calc(100svh - 112px);
+  }
+
+  .chat-room-header,
+  .chat-room-actions,
+  .owner-reservation-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .chat-room-header {
+    gap: 12px;
+  }
+
+  .reservation-primary-button,
+  .reservation-calendar-button,
+  .owner-reservation-actions button,
+  .reservation-pill {
+    width: 100%;
+  }
+
+  .chat-reservation-dock {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .chat-reservation-dock-controls,
+  .chat-reservation-dock-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .message-bubble {
+    max-width: 82%;
+  }
+}

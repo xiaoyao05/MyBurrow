@@ -1,0 +1,327 @@
+.listing-form-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 16px;
+    background: var(--bg);
+}
+
+.listing-form {
+    background: var(--surface-strong);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: var(--shadow-sm);
+    padding: 32px;
+    width: 100%;
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.listing-form-title {
+    font-size: 25px;
+    font-weight: 700;
+    color: var(--text-h);
+    margin: 0 0 8px;
+}
+
+.listing-form label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 2px;
+}
+
+.listing-form input[type="text"],
+.listing-form textarea,
+.listing-form select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    color: var(--text-h);
+    outline: none;
+    transition: border 0.2s;
+    box-sizing: border-box;
+}
+
+.listing-form textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.ai-draft-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.ai-draft-actions span {
+    color: #b42318;
+    font-size: 13px;
+}
+
+.ai-draft-button,
+.ai-draft-preview button {
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.ai-draft-button {
+    padding: 8px 12px;
+    background: #111827;
+    color: #fff;
+}
+
+.ai-draft-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+}
+
+.ai-draft-preview {
+    display: grid;
+    gap: 10px;
+    padding: 12px;
+    border: 1px solid #ead8bc;
+    border-radius: 8px;
+    background: #fff8ed;
+}
+
+.ai-draft-preview p {
+    margin: 0;
+    color: #333;
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+.ai-draft-preview div {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.ai-draft-preview button {
+    padding: 8px 10px;
+    background: #e5a046;
+    color: #fff;
+}
+
+.ai-draft-preview button:last-child {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.image-ai-helper,
+.image-ai-result {
+    display: grid;
+    gap: 10px;
+    padding: 12px;
+    border: 1px solid #ead8bc;
+    border-radius: 8px;
+    background: #fff8ed;
+}
+
+.image-ai-helper strong,
+.image-ai-result strong {
+    color: #2c2217;
+    font-size: 14px;
+}
+
+.image-ai-helper p,
+.image-ai-result p {
+    margin: 0;
+    color: #5d4a31;
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+.image-ai-helper button,
+.image-ai-action-row button {
+    justify-self: start;
+    min-height: 36px;
+    border: none;
+    border-radius: 8px;
+    padding: 0 12px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.image-ai-helper button:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+}
+
+.image-ai-helper span {
+    color: #b42318;
+    font-size: 13px;
+}
+
+.image-ai-result label {
+    display: grid;
+    gap: 6px;
+}
+
+.image-ai-product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.image-ai-suggestions {
+    display: grid;
+    gap: 8px;
+    padding: 10px;
+    border: 1px solid #efe0c8;
+    border-radius: 8px;
+    background: #fffdf8;
+}
+
+.image-ai-suggestions label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    color: #4c3b27;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.image-ai-suggestions input {
+    flex: 0 0 auto;
+}
+
+.image-ai-copy {
+    display: grid;
+    gap: 8px;
+    padding: 10px;
+    border-radius: 8px;
+    background: #fffdf8;
+}
+
+.image-ai-copy strong {
+    color: #2c2217;
+}
+
+.image-ai-note-section {
+    margin-top: 50px;
+}
+
+.image-ai-action-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.image-ai-result .image-ai-apply-button {
+    background: #e5a046;
+    color: #ffffff;
+}
+
+.image-ai-result .image-ai-discard-button {
+    border: 1px solid #d7cbb9;
+    background: #ffffff;
+    color: #5d4a31;
+}
+
+.listing-form input[type="text"]:focus,
+.listing-form textarea:focus,
+.listing-form select:focus {
+    border-color: var(--primary-hover);
+    box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+.listing-form input[type="file"] {
+    font-size: 14px;
+    color: #555;
+    cursor: pointer;
+}
+
+.listing-image-preview {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+}
+
+.listing-image-preview span {
+    color: #555;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.listing-form .listing-image-preview .listing-image-preview-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    min-width: 0;
+}
+
+.listing-form .listing-image-preview .listing-image-preview-item img {
+    flex: 0 1 auto;
+    min-width: 0;
+    width: 100%;
+    max-width: 360px;
+    height: auto;
+    border-radius: 8px;
+    object-fit: contain;
+    margin-top: 4px;
+    border: 1px solid #e0e0e0;
+}
+
+.listing-image-delete-button {
+    flex: 0 0 34px;
+    display: inline-grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    margin-top: 4px;
+    border: none;
+    border-radius: 6px;
+    background: #d92d20;
+    color: #ffffff;
+    cursor: pointer;
+    border: 1px solid #d92d20;
+}
+
+.listing-image-delete-button:hover {
+    background: #b42318;
+    color: #ffffff;
+}
+
+.listing-image-delete-button svg {
+    width: 15px;
+    height: 15px;
+    color: #ffffff;
+    fill: #ffffff;
+}
+
+.listing-image-delete-button svg * {
+    fill: #ffffff;
+}
+
+.listing-form button[type="submit"] {
+    margin-top: 8px;
+    padding: 12px;
+    background-color: var(--primary);
+    color: var(--primary-contrast);
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.listing-form button[type="submit"]:hover {
+    background-color: var(--primary-hover);
+    color: #ffffff;
+}

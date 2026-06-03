@@ -1,0 +1,39 @@
+.profile-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background: #3b6f68;
+    color: #ffffff;
+    border: 2px solid #fff7ec;
+    font-weight: 800;
+    letter-spacing: 0;
+    object-fit: cover;
+    box-shadow: 0 8px 18px rgba(35, 26, 15, 0.14);
+    box-sizing: border-box;
+}
+
+.profile-avatar-medium {
+    width: 92px;
+    height: 92px;
+    font-size: 28px;
+}
+
+.profile-avatar-small {
+    width: 48px;
+    height: 48px;
+    font-size: 15px;
+}
+
+.profile-avatar-chatHeader {
+    width: 42px;
+    height: 42px;
+    font-size: 14px;
+}
+
+.profile-avatar-large {
+    width: 112px;
+    height: 112px;
+    font-size: 32px;
+}

@@ -1,0 +1,278 @@
+.activity-page-shell {
+  min-height: 100svh;
+  background: #f4f0e7;
+}
+
+.activity-page {
+  width: min(1060px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 24px 0;
+}
+
+.activity-panel {
+  overflow: hidden;
+  border: 1px solid #ded6c7;
+  border-radius: 8px;
+  background: #fffdf8;
+  box-shadow: 0 14px 32px rgba(53, 39, 20, 0.08);
+}
+
+.activity-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px 16px;
+  background: #ead4ab;
+  color: #2c2217;
+}
+
+.activity-header h1 {
+  margin: 0;
+  color: #2c2217;
+  font-size: 24px;
+  line-height: 1.1;
+  letter-spacing: 0;
+}
+
+.activity-header p {
+  margin-top: 4px;
+  color: #6c5f4c;
+  font-size: 14px;
+}
+
+.activity-tabs {
+  display: flex;
+  gap: 6px;
+  padding: 14px 16px 0;
+  border-bottom: 1px solid #efe8dc;
+}
+
+.activity-tabs button {
+  min-height: 42px;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  background: transparent;
+  color: #6c5f4c;
+  padding: 0 12px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.activity-tabs button.active {
+  border-color: #5e7f58;
+  color: #2c2217;
+}
+
+.activity-list {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+}
+
+.activity-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  border: 1px solid #efe8dc;
+  border-radius: 8px;
+  padding: 14px;
+  background: #ffffff;
+}
+
+.activity-status {
+  flex: 0 0 auto;
+  min-width: 88px;
+  border-radius: 999px;
+  padding: 7px 10px;
+  text-align: center;
+  color: #24311f;
+  background: #e4f0df;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.activity-status-pending {
+  background: #fff0c7;
+  color: #6b4b00;
+}
+
+.activity-status-approved {
+  background: #dceef8;
+  color: #194b67;
+}
+
+.activity-status-borrowed {
+  background: #e4f0df;
+  color: #245323;
+}
+
+.activity-status-returned {
+  background: #eee8dd;
+  color: #4d4438;
+}
+
+.activity-status-cancelled {
+  background: #f8d7d2;
+  color: #7a1f18;
+}
+
+.activity-image-button {
+  flex: 0 0 124px;
+  width: 124px;
+  aspect-ratio: 4 / 3;
+  padding: 0;
+  border: 1px solid #efe8dc;
+  border-radius: 8px;
+  background: #fffaf2;
+  color: #8a7b68;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.activity-image-button img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.activity-image-button span {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  font-size: 12px;
+  font-weight: 800;
+  box-sizing: border-box;
+}
+
+.activity-image-button:hover {
+  border-color: #ba7e30;
+}
+
+.activity-image-button:focus-visible {
+  outline: 2px solid #ba7e30;
+  outline-offset: 2px;
+}
+
+.activity-card-main {
+  min-width: 0;
+  flex: 1;
+}
+
+.activity-card-main h3 {
+  margin: 0;
+  color: #241b12;
+  font-size: 17px;
+  letter-spacing: 0;
+}
+
+.activity-card-main p {
+  margin: 4px 0 10px;
+  color: #6f6659;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.activity-card-main .activity-counterparty {
+  margin-top: -4px;
+  color: #4f6549;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.activity-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.activity-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #6c5f4c;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.activity-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.activity-actions button {
+  min-height: 34px;
+  border: 0;
+  border-radius: 6px;
+  background: #e5a046;
+  color: #241b12;
+  padding: 0 12px;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.activity-actions button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.activity-empty,
+.activity-error,
+.activity-success {
+  padding: 28px;
+  color: #6c5f4c;
+}
+
+.activity-error {
+  color: #a1261a;
+}
+
+.activity-success {
+  color: #3b6c2e;
+  font-weight: 800;
+}
+
+.activity-empty a {
+  color: #5e7f58;
+  font-weight: 800;
+}
+
+.activity-panel .listing-grid {
+  padding: 20px;
+}
+
+@media (max-width: 700px) {
+  .activity-tabs {
+    overflow-x: auto;
+  }
+
+  .activity-card {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .activity-image-button {
+    width: 100%;
+    max-width: 180px;
+  }
+
+  .activity-card-main {
+    grid-column: 1 / -1;
+  }
+
+  .activity-meta {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .activity-actions {
+    flex-wrap: wrap;
+  }
+}

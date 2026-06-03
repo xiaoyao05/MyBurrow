@@ -1,0 +1,86 @@
+.my-listings-page {
+  min-height: 100svh;
+  background: var(--bg);
+}
+
+.my-listings-content {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 28px 0 56px;
+}
+
+.my-listings-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.my-listings-header h1 {
+  margin: 0 0 4px;
+  color: var(--text-h);
+  font-size: 30px;
+  line-height: 1.15;
+}
+
+.my-listings-header p {
+  color: var(--text);
+  font-size: 14px;
+}
+
+.my-listings-create {
+  flex: 0 0 auto;
+  min-height: 40px;
+  border: none;
+  border-radius: 6px;
+  padding: 0 14px;
+  background: var(--primary);
+  color: var(--primary-contrast);
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.my-listings-create:hover {
+  background: var(--primary-hover);
+  color: #ffffff;
+}
+
+.my-listings-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: 24px;
+}
+
+.my-listings-grid .listing-info {
+  padding: 12px 4px 0;
+}
+
+@media (max-width: 720px) {
+  .my-listings-content {
+    width: min(100% - 24px, 1180px);
+    padding-top: 20px;
+  }
+
+  .my-listings-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .my-listings-create {
+    width: 100%;
+  }
+
+  .my-listings-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+@media (min-width: 721px) and (max-width: 980px) {
+  .my-listings-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

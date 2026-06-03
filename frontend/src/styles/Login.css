@@ -1,0 +1,224 @@
+.login-page {
+    min-height: 100svh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f4f0e7;
+    padding: 32px 16px;
+    box-sizing: border-box;
+}
+
+.login-container {
+    width: min(100%, 400px);
+    background: #fffdf8;
+    padding: 32px;
+    border: 1px solid #ded6c7;
+    border-radius: 8px;
+    box-shadow: 0 14px 32px rgba(53, 39, 20, 0.08);
+    box-sizing: border-box;
+}
+
+.auth-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+    text-align: center;
+}
+
+.auth-brand img {
+    width: 200px;
+    height: auto;
+}
+
+.auth-brand h1 {
+    margin: 0;
+    color: #2c2217;
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1.12;
+    letter-spacing: 0;
+}
+
+.auth-brand p {
+    max-width: 300px;
+    color: #6c5f4c;
+    font-size: 15px;
+    line-height: 1.4;
+}
+
+.login-title {
+    margin: 0 0 22px;
+    color: #2c2217;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0;
+}
+
+.login-form {
+    margin-bottom: 16px;
+}
+
+.login-form label {
+    display: block;
+    margin-bottom: 7px;
+    color: #4c3b27;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.login-input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #d7cbb9;
+    border-radius: 8px;
+    background: #fffaf2;
+    color: #211b14;
+    font-size: 15px;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.login-input:focus {
+    border-color: #ba7e30;
+    box-shadow: 0 0 0 3px rgba(229, 160, 70, 0.18);
+}
+
+.password-input-wrapper {
+    position: relative;
+}
+
+.password-input {
+    padding-right: 44px;
+}
+
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #6c5f4c;
+    cursor: pointer;
+    transform: translateY(-50%);
+}
+
+.password-toggle:hover {
+    color: #2c2217;
+}
+
+.password-toggle:focus-visible {
+    outline: 2px solid #ba7e30;
+    outline-offset: 2px;
+    border-radius: 6px;
+}
+
+.password-toggle svg {
+    width: 20px;
+    height: 20px;
+}
+
+.login-button {
+    width: 100%;
+    padding: 12px 16px;
+    margin-top: 4px;
+    background: #e5a046;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 700;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.login-button:hover {
+    background: #ba7e30;
+    transform: translateY(-1px);
+}
+
+.login-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.62;
+    transform: none;
+}
+
+.login-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 18px 0;
+    color: #8a7b68;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.login-divider::before,
+.login-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #ded6c7;
+}
+
+.google-login-button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: #ffffff;
+    color: #2c2217;
+    border: 1px solid #d7cbb9;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 700;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.google-login-button:hover {
+    border-color: #ba7e30;
+    box-shadow: 0 8px 18px rgba(53, 39, 20, 0.08);
+    transform: translateY(-1px);
+}
+
+.google-login-button svg {
+    width: 20px;
+    height: 20px;
+    flex: 0 0 auto;
+}
+
+.login-footer {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 15px;
+    color: #6f6659;
+}
+
+.register-link {
+    color: #6f4f28;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.register-link:hover {
+    text-decoration: underline;
+}
+
+.error{
+    color: #b42318;
+    margin-top: 12px;
+    font-size: 15px;
+    text-align: center;
+}

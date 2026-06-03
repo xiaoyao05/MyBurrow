@@ -1,0 +1,274 @@
+.register-page {
+    min-height: 100svh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f4f0e7;
+    padding: 32px 16px;
+    box-sizing: border-box;
+}
+
+.register-page-edit {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    width: min(100%, 430px);
+    margin: 0 auto;
+}
+
+.register-container {
+    width: min(100%, 430px);
+    background: #fffdf8;
+    padding: 32px;
+    border: 1px solid #ded6c7;
+    border-radius: 8px;
+    box-shadow: 0 14px 32px rgba(53, 39, 20, 0.08);
+    box-sizing: border-box;
+}
+
+.auth-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+    text-align: center;
+}
+
+.auth-brand img {
+    width: 140px;
+    height: auto;
+}
+
+.auth-brand h1 {
+    margin: 0;
+    color: #2c2217;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.12;
+    letter-spacing: 0;
+}
+
+.auth-brand p {
+    max-width: 300px;
+    color: #6c5f4c;
+    font-size: 15px;
+    line-height: 1.4;
+}
+
+.register-title {
+    margin: 0 0 22px;
+    color: #2c2217;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0;
+}
+
+.edit-profile-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    align-self: flex-start;
+    margin-bottom: 16px;
+    color: #4f3d23;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.edit-profile-back-link:hover {
+    color: #9b6422;
+}
+
+.edit-profile-back-link svg {
+    width: 18px;
+    height: 18px;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin: 0 0 16px;
+}
+
+.register-form label {
+    color: #4c3b27;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.profile-picture-field {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px;
+    margin-bottom: 18px;
+    border: 1px solid #ded6c7;
+    border-radius: 8px;
+    background: #fffaf2;
+}
+
+.profile-picture-controls {
+    min-width: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.profile-picture-controls label {
+    color: #4c3b27;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.profile-picture-input {
+    width: 100%;
+    color: #4c3b27;
+    font-size: 13px;
+}
+
+.profile-picture-input::file-selector-button {
+    margin-right: 10px;
+    border: none;
+    border-radius: 6px;
+    background: #3b6f68;
+    color: #ffffff;
+    padding: 7px 10px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.remove-profile-picture-button {
+    align-self: flex-start;
+    border: 1px solid #cdbda9;
+    border-radius: 6px;
+    background: #fffdf8;
+    color: #6f4f28;
+    padding: 7px 10px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.register-input {
+    width: 100%;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    border: 1px solid #d7cbb9;
+    border-radius: 8px;
+    background: #fffaf2;
+    color: #211b14;
+    font-size: 15px;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+textarea.register-input {
+    min-height: 88px;
+    resize: vertical;
+}
+
+.register-input:focus {
+    border-color: #ba7e30;
+    box-shadow: 0 0 0 3px rgba(229, 160, 70, 0.18);
+}
+
+.password-input-wrapper {
+    position: relative;
+}
+
+.password-input {
+    padding-right: 44px;
+}
+
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #6c5f4c;
+    cursor: pointer;
+    transform: translateY(-50%);
+}
+
+.password-toggle:hover {
+    color: #2c2217;
+}
+
+.password-toggle:focus-visible {
+    outline: 2px solid #ba7e30;
+    outline-offset: 2px;
+    border-radius: 6px;
+}
+
+.password-toggle svg {
+    width: 20px;
+    height: 20px;
+}
+
+.register-button {
+    width: 100%;
+    padding: 12px 16px;
+    margin-top: 4px;
+    background: #e5a046;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 700;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.register-button:hover {
+    background: #ba7e30;
+    transform: translateY(-1px);
+}
+
+.register-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.62;
+    transform: none;
+}
+
+.register-footer {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 16px;
+    color: #6f6659;
+}
+
+.login-link {
+    color: #6f4f28;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.login-link:hover {
+    text-decoration: underline;
+}
+
+.error{
+    color: #b42318;
+    margin-top: 12px;
+    font-size: 15px;
+    text-align: center;
+}
+
+@media (max-width: 440px) {
+    .profile-picture-field {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}

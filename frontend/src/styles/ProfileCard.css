@@ -1,0 +1,234 @@
+.profile-card {
+    width: 300px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    background: #fff;
+    padding: 30px;
+    padding-bottom: 56px;
+    position: relative;
+}
+
+.profile-page {
+    display: flex;
+    justify-content: center;
+    padding-top: 40px;
+}
+
+.profile-page-stacked {
+    align-items: center;
+    flex-direction: column;
+    gap: 22px;
+    width: min(720px, calc(100% - 32px));
+    margin: 0 auto;
+    padding-bottom: 48px;
+}
+
+.profile-page-message,
+.profile-page-error {
+    color: #000000;
+}
+
+.profile-page-error {
+    color: #b00020;
+}
+
+.profile-back-link {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    gap: 6px;
+    color: #4f3d23;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.profile-back-link:hover {
+    color: #9b6422;
+}
+
+.profile-card-header {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.profile-picture-edit {
+    position: relative;
+    display: inline-flex;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.profile-picture-edit input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.profile-picture-edit-bubble {
+    position: absolute;
+    right: 2px;
+    bottom: 2px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    background: #e5a046;
+    color: #ffffff;
+    box-shadow: 0 6px 14px rgba(35, 26, 15, 0.22);
+    transition: background 0.2s, transform 0.2s;
+}
+
+.profile-picture-edit:hover .profile-picture-edit-bubble,
+.profile-picture-edit:focus-within .profile-picture-edit-bubble {
+    background: #ba7e30;
+    transform: scale(1.05);
+}
+
+.profile-picture-edit-bubble svg {
+    font-size: 15px;
+}
+
+.profile-card h3 {
+    margin: 4px 0 12px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    color: #000000;
+    text-align: center;
+}
+
+.profile-card p {
+    font-size: 13px;
+    color: #000000;
+    margin-bottom: 8px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.profile-card .edit-button {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background-color: #e5a046;
+    color: #fff;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.profile-card .edit-button:hover {
+    background-color: #ba7e30;
+}
+
+.profile-card .delete-account-button {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    border: none;
+    border-radius: 6px;
+    background-color: #c7332b;
+    color: #ffffff;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.profile-card .delete-account-button:hover {
+    background-color: #a6241e;
+}
+
+.profile-card .delete-account-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+}
+
+.user-reviews {
+    width: 100%;
+    border-top: 1px solid #ead8bd;
+    padding-top: 26px;
+}
+
+.user-reviews-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.user-reviews-heading h2 {
+    margin: 0;
+    color: #000000;
+    font-size: 20px;
+    letter-spacing: 0;
+}
+
+.user-reviews-heading span {
+    display: inline-grid;
+    place-items: center;
+    min-width: 28px;
+    min-height: 28px;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #000000;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.user-review-list {
+    display: grid;
+    gap: 14px;
+}
+
+.user-review {
+    border: 1px solid #ead8bd;
+    border-radius: 8px;
+    background: #ffffff;
+    padding: 16px;
+    color: #000000;
+}
+
+.user-review p {
+    margin: 0;
+    font-size: 15px;
+}
+
+.user-review-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.user-review-top span {
+    color: #614c2b;
+    font-size: 13px;
+}
+
+.user-review-score {
+    margin-bottom: 5px;
+}
+
+.user-review-score {
+    font-size: 15px;
+    color: #9b6422;
+    font-weight: 700;
+}
+
+.user-reviews-average {
+    margin-bottom: 14px;
+    color: #9b6422;
+    font-size: 15px;
+    font-weight: 700;
+}
