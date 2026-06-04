@@ -58,7 +58,7 @@ def create_calendar_state(user_id: int, nonce: str, return_path: str):
     return jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
 
 
-def decode_calendar_state(state: str, expected_nonce: str):
+def decode_calendar_state(state: str):
     try:
         payload = jwt.decode(state, SECRET_KEY, algorithms=[ALGORITHM])
     except JWTError:
@@ -69,7 +69,6 @@ def decode_calendar_state(state: str, expected_nonce: str):
 
     if (
         payload.get("purpose") != "google_calendar_connect"
-        or payload.get("nonce") != expected_nonce
         or not payload.get("sub")
     ):
         raise HTTPException(
@@ -152,15 +151,6 @@ async def get_calendar_connect_url(
         + urlencode(params)
     })
 
-    # save the random nonce in the browser cookie for 10 minutes
-    response.set_cookie(
-        key="google_calendar_oauth_nonce",
-        value=nonce,
-        httponly=True,
-        secure=False,
-        samesite="lax",
-        max_age=600
-    )
     return response
 
 
@@ -178,15 +168,14 @@ async def google_calendar_callback(
 
     code = request.query_params.get("code")
     state = request.query_params.get("state")
-    nonce = request.cookies.get("google_calendar_oauth_nonce")
 
-    if not code or not state or not nonce:
+    if not code or not state:
         raise HTTPException(
             status_code=400,
             detail="Invalid Google Calendar connection request"
         )
 
-    state_payload = decode_calendar_state(state, nonce)
+    state_payload = decode_calendar_state(state)
     current_user_id = state_payload["user_id"]
     return_path = state_payload["return_path"]
 
@@ -266,7 +255,6 @@ async def google_calendar_callback(
         f"{FRONTEND_URL}{return_path}#"
         + urlencode({"calendar_connected": "true"})
     )
-    response.delete_cookie("google_calendar_oauth_nonce")
     return response
 
 
