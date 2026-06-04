@@ -11,6 +11,8 @@ import ChatRoomPage from "./pages/ChatRoomPage";
 import ListingDetails from "./pages/ListingDetails";
 import ReviewForm from "./pages/ReviewForm";
 import UserProfile from "./pages/UserProfile";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
 
 export default function App() {
 
@@ -19,6 +21,8 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/home" />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<TermsOfService />} />
         <Route path="/registerform" element={<RegisterForm />} />
         <Route path="/myprofile" element={<MyProfile />} />
         <Route path="/profile/:userId" element={<UserProfile />} />
