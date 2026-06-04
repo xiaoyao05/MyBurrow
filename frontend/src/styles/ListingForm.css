@@ -27,6 +27,28 @@
     margin: 0 0 8px;
 }
 
+.listing-form-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    min-height: 34px;
+    margin-bottom: 2px;
+    color: #5d4528;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.listing-form-back-link:hover {
+    color: var(--primary-hover);
+}
+
+.listing-form-back-link svg {
+    width: 18px;
+    height: 18px;
+}
+
 .listing-form label {
     font-size: 13px;
     font-weight: 600;

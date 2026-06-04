@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import httpClient from "../httpClient";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { FaTrashAlt } from "react-icons/fa";
+import { IoArrowBack } from "react-icons/io5";
 import "../styles/ListingForm.css";
 import TopNav from "../components/TopNav";
 import { prepareImageFile } from "../utils/imageUpload";
@@ -402,6 +403,12 @@ export default function ListingForm() {
         <TopNav />
         <div className="listing-form-page">
             <form className="listing-form" onSubmit={handleSubmit}>
+                {editMode && (
+                    <Link className="listing-form-back-link" to="/mylistings">
+                        <IoArrowBack aria-hidden="true" />
+                        <span>Back to My Listings</span>
+                    </Link>
+                )}
                 <h1 className="listing-form-title">
                     {editMode ? "Edit Listing" : "Create New Listing"}
                 </h1>
