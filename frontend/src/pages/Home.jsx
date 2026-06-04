@@ -1,9 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
-import { Link } from "react-router-dom";
 import httpClient from "../httpClient";
 import ListingCard from "../components/ListingCard";
 import TopNav from "../components/TopNav";
-import "../styles/Home.css";
 
 export default function Home() {
   const [listings, setListings] = useState([]);
@@ -131,24 +129,6 @@ export default function Home() {
         showSearch
       />
 
-      <section className="home-overview" aria-labelledby="home-overview-title">
-        <div>
-          <h1 id="home-overview-title">MyBurrow</h1>
-          <p>
-            MyBurrow is an item-sharing app for lending and borrowing everyday
-            items. Users can create listings, browse available items, chat with
-            other users, request reservations, track borrowing activity, and
-            review completed experiences.
-          </p>
-        </div>
-
-        <p className="home-data-note">
-          Google account data is used for sign-in when you choose Google login.
-          Google Calendar access is used only to add reservation dates to your
-          calendar when you connect it.
-        </p>
-      </section>
-
       {loading && <p className="page-message">Loading listings...</p>}
 
       {!loading && error && <p className="page-message page-message-error">{error}</p>}
@@ -178,10 +158,6 @@ export default function Home() {
         )}
         </>
       )}
-      <footer className="home-footer">
-        <Link to="/privacy">Privacy Policy</Link>
-        <Link to="/terms">Terms of Service</Link>
-      </footer>
       </div>
   );
 }
