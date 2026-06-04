@@ -20,6 +20,44 @@ function getListingImages(listing) {
   return listing.image_url ? [listing.image_url] : [];
 }
 
+function parseDescriptionSection(section) {
+  const match = section.match(/^\*{0,2}([^:*]+:)\*{0,2}\s*(.*)$/s);
+  if (!match) {
+    return { label: null, text: section };
+  }
+
+  return {
+    label: match[1],
+    text: match[2],
+  };
+}
+
+function ReviewListingDescription({ description }) {
+  const sections = (description || "")
+    .split(/\n\s*\n/)
+    .map((section) => section.trim())
+    .filter(Boolean);
+
+  if (sections.length === 0) {
+    return <span>Not provided</span>;
+  }
+
+  return (
+    <div className="review-form-description">
+      {sections.map((section, index) => {
+        const parsedSection = parseDescriptionSection(section);
+
+        return (
+          <p key={`${parsedSection.label || "section"}-${index}`}>
+            {parsedSection.label && <strong>{parsedSection.label} </strong>}
+            {parsedSection.text}
+          </p>
+        );
+      })}
+    </div>
+  );
+}
+
 // reusable component
 function ScorePicker({ label, value, onChange, required = false }) {
   return (
@@ -241,9 +279,10 @@ export default function ReviewForm() {
                     Owner: {context.listing.owner_name}
                   </span>
                 )}
-                <p className="review-form-description">
-                  Description: {context.listing.description}
-                </p>
+                <div className="review-form-description-field">
+                  <span>Description</span>
+                  <ReviewListingDescription description={context.listing.description} />
+                </div>
               </div>
             </div>
 

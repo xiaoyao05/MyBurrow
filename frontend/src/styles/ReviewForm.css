@@ -123,11 +123,34 @@
   align-items: flex-start;
 }
 
-.review-form-description {
+.review-form-description-field {
   margin-top: 22px;
+  width: 100%;
+  border-top: 1px solid #ead8bd;
+  padding-top: 10px;
+}
+
+.review-form-description-field > span {
+  color: #614c2b;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.review-form-description {
+  display: grid;
+  gap: 12px;
+  margin-top: 4px;
   color: #000000;
-  line-height: 1.5;
-  font-size: 15px;
+  line-height: 1.55;
+  font-size: 14px;
+}
+
+.review-form-description p {
+  margin: 0;
+}
+
+.review-form-description strong {
+  font-weight: 800;
 }
 
 .review-form-owner {
