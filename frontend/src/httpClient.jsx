@@ -6,12 +6,10 @@ export const API_URL =
   "http://localhost:8000";
 
 export function getWebSocketUrl(path) {
-  const baseUrl = new URL(API_URL);
-  baseUrl.protocol = baseUrl.protocol === "https:" ? "wss:" : "ws:";
-  baseUrl.pathname = path;
-  baseUrl.search = "";
-  baseUrl.hash = "";
-  return baseUrl.toString();
+  const wsUrl = new URL(path, API_URL);
+  wsUrl.protocol = wsUrl.protocol === "https:" ? "wss:" : "ws:";
+  wsUrl.hash = "";
+  return wsUrl.toString();
 }
 
 console.log("API URL:", API_URL);

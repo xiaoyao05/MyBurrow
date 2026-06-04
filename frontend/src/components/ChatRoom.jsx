@@ -266,7 +266,9 @@ export default function ChatRoom({ roomId, currentUserId }) {
     const token = localStorage.getItem("token");
     if (!token) return;
 
-    const ws = new WebSocket(getWebSocketUrl(`/api/chat/ws/${roomId}?token=${token}`));
+    const ws = new WebSocket(
+      getWebSocketUrl(`/api/chat/ws/${roomId}?token=${encodeURIComponent(token)}`)
+    );
 
     socketRef.current = ws;
 
