@@ -49,6 +49,7 @@ class ChatReservationContextOut(BaseModel):
     listing_name: str
     lender_id: int
     borrower_id: int
+    current_user_role: str
     other_user: OtherUserOut
     listing_status: ListingStatus
     listing_due_date: Optional[date] = None

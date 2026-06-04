@@ -486,6 +486,32 @@ async def get_messages(
     return messages_result.scalars().all()
 
 
+@router.post("/{room_id}/messages", response_model=MessageOut)
+async def create_message(
+    room_id: int,
+    message_data: MessageCreate,
+    db: AsyncSession = Depends(get_db),
+    user=Depends(get_current_user)
+):
+    room = await get_room_for_user(db, room_id, user)
+    trimmed_content = message_data.content.strip()
+
+    if not trimmed_content:
+        raise HTTPException(status_code=400, detail="Message cannot be empty")
+
+    message = await create_chat_message(
+        db,
+        room,
+        user,
+        trimmed_content
+    )
+    await db.commit()
+    await db.refresh(message)
+    await broadcast_room_message(room_id, message)
+
+    return message
+
+
 @router.patch("/{room_id}/messages/{message_id}", response_model=MessageOut)
 async def update_message(
     room_id: int,
@@ -600,6 +626,7 @@ async def get_reservation_context(
         listing_name=listing.name,
         lender_id=room.lender_id,
         borrower_id=room.borrower_id,
+        current_user_role="owner" if user == room.lender_id else "borrower",
         other_user=OtherUserOut(
             id=other_user.id,
             name=other_user.name,

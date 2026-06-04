@@ -110,6 +110,15 @@ def build_review_prompt(request: DraftRequest) -> str:
 def build_chat_reply_prompt(request: DraftRequest) -> str:
     context = request.context or {}
     recent_messages = context.get("recent_messages") or []
+    current_user_role = context.get("current_user_role") or "participant"
+    role_guidance = (
+        "You are replying as the item owner/lender. Do not ask to borrow the item. "
+        "Help the borrower with availability, pickup, lending terms, or reservation next steps."
+        if current_user_role == "owner"
+        else "You are replying as the borrower. Ask about availability, timing, pickup, or reservation next steps."
+        if current_user_role == "borrower"
+        else "You are replying as the current signed-in chat participant."
+    )
     conversation = "\n".join(
         f"{message.get('sender', 'Someone')}: {message.get('content', '')}"
         for message in recent_messages[-8:]
@@ -120,6 +129,8 @@ def build_chat_reply_prompt(request: DraftRequest) -> str:
         "Draft only the message the user should send next.\n"
         "Do not promise actions, dates, approvals or availability unless the user explicitly says so.\n"
         "Keep it friendly and under 70 words. Do not use bullet points.\n\n"
+        f"Current user role: {current_user_role}\n"
+        f"Role guidance: {role_guidance}\n"
         f"Tone: {request.tone}\n"
         f"Listing: {context.get('listing_name') or 'the listing'}\n"
         f"Recipient: {context.get('other_user_name') or 'the other user'}\n"
@@ -163,6 +174,7 @@ async def hydrate_draft_context(request: DraftRequest, access_token: str) -> Dra
             **(request.context or {}),
             "listing_name": chat_context["listing"]["name"],
             "other_user_name": (chat_context.get("other_user") or {}).get("name"),
+            "current_user_role": chat_context.get("current_user_role"),
             "reservation_status": current_reservation.get("status"),
             "recent_messages": [
                 {

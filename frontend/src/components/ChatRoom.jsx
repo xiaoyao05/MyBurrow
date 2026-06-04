@@ -114,7 +114,7 @@ export default function ChatRoom({ roomId, currentUserId }) {
   const [aiDraftError, setAiDraftError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isConnected, setIsConnected] = useState(false);
+  const [, setIsConnected] = useState(false);
   const [reservationContext, setReservationContext] = useState(null);
   const [reservationError, setReservationError] = useState(null);
   const [reservationBusy, setReservationBusy] = useState(false);
@@ -265,7 +265,7 @@ export default function ChatRoom({ roomId, currentUserId }) {
     const token = localStorage.getItem("token");
     if (!token) return;
 
-    const ws = new WebSocket(getWebSocketUrl(`/chat/ws/${roomId}?token=${token}`));
+    const ws = new WebSocket(getWebSocketUrl(`/api/chat/ws/${roomId}?token=${token}`));
 
     socketRef.current = ws;
 
@@ -363,16 +363,35 @@ export default function ChatRoom({ roomId, currentUserId }) {
       return;
     }
 
-    if (socketRef.current?.readyState !== WebSocket.OPEN) return;
+    if (socketRef.current?.readyState === WebSocket.OPEN) {
+      socketRef.current.send(
+        JSON.stringify({
+          content: trimmedMessage,
+        })
+      );
 
-    socketRef.current.send(
-      JSON.stringify({
+      setMessage("");
+      setAiDraftError(null);
+      return;
+    }
+
+    try {
+      setMessageActionBusy(true);
+      const response = await httpClient.post(`/api/chat/${roomId}/messages`, {
         content: trimmedMessage,
-      })
-    );
-
-    setMessage("");
-    setAiDraftError(null);
+      });
+      setMessages((prev) => {
+        if (prev.some((msg) => msg.id === response.data.id)) return prev;
+        return [...prev, response.data];
+      });
+      setMessage("");
+      setAiDraftError(null);
+      setError(null);
+    } catch (err) {
+      setError(err.response?.data?.detail || "Failed to send message");
+    } finally {
+      setMessageActionBusy(false);
+    }
   };
 
   const openMessageMenu = (e, msg) => {
@@ -883,7 +902,6 @@ export default function ChatRoom({ roomId, currentUserId }) {
           onClick={sendMessage}
           disabled={
             !message.trim() ||
-            (!editingMessage && !isConnected) ||
             messageActionBusy
           }
           aria-label="Send message"
