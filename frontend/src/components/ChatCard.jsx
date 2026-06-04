@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import { FaTrashAlt } from "react-icons/fa";
 import ProfileAvatar from "./ProfileAvatar";
+import { parseUtcDate } from "../utils/dateTime";
 
 function formatMessageTime(value) {
   if (!value) return "";
 
-  const date = new Date(value);
+  const date = parseUtcDate(value);
   const now = new Date();
   const isToday = date.toDateString() === now.toDateString();
 

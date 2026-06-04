@@ -1,5 +1,5 @@
-from pydantic import BaseModel
-from datetime import date, datetime
+from pydantic import BaseModel, field_serializer
+from datetime import date, datetime, timezone
 from typing import Optional
 
 from backend.enums.ListingStatus import ListingStatus
@@ -67,6 +67,12 @@ class MessageOut(BaseModel):
 
     class Config:
         from_attributes = True
+
+    @field_serializer("created_at")
+    def serialize_created_at(self, created_at: datetime):
+        if created_at.tzinfo is None:
+            created_at = created_at.replace(tzinfo=timezone.utc)
+        return created_at.astimezone(timezone.utc).isoformat().replace("+00:00", "Z")
 
 class ChatRoomOut(BaseModel):
     id: int

@@ -36,6 +36,10 @@ router = APIRouter(
 active_connections = {}
 
 
+def serialize_message_created_at(value: datetime):
+    return value.isoformat() + "Z" if value.tzinfo is None else value.isoformat()
+
+
 def check_room_access(room: ChatRoom, user_id: int):
     return user_id == room.lender_id or user_id == room.borrower_id
 
@@ -84,7 +88,7 @@ async def broadcast_room_message(room_id: int, message: Message):
         "room_id": message.room_id,
         "sender_id": message.sender_id,
         "content": message.content,
-        "created_at": message.created_at.isoformat(),
+        "created_at": serialize_message_created_at(message.created_at),
         "is_read": message.is_read,
         "is_system": message.is_system
     }
@@ -552,7 +556,7 @@ async def update_message(
                 "room_id": message.room_id,
                 "sender_id": message.sender_id,
                 "content": message.content,
-                "created_at": message.created_at.isoformat(),
+                "created_at": serialize_message_created_at(message.created_at),
                 "is_read": message.is_read,
                 "is_system": message.is_system
             }

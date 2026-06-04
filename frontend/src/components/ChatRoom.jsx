@@ -13,11 +13,12 @@ import { FaTrashAlt } from "react-icons/fa";
 import ConfirmModal from "./ConfirmModal";
 import ProfileAvatar from "./ProfileAvatar";
 import httpClient, { getWebSocketUrl } from "../httpClient";
+import { parseUtcDate } from "../utils/dateTime";
 
 function formatBubbleTime(value) {
   if (!value) return "";
 
-  return new Date(value).toLocaleTimeString([], {
+  return parseUtcDate(value).toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
   });
@@ -198,7 +199,7 @@ export default function ChatRoom({ roomId, currentUserId }) {
 
     return messages
       .filter((msg) => !hiddenIds.has(msg.id))
-      .sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+      .sort((a, b) => parseUtcDate(a.created_at) - parseUtcDate(b.created_at));
   }, [hiddenMessageIds, messages]);
 
   const calendarDays = useMemo(
