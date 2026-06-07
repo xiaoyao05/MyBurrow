@@ -2,8 +2,14 @@ import { Link } from "react-router-dom";
 import { FaTrashAlt } from "react-icons/fa";
 import ProfileAvatar from "./ProfileAvatar";
 import { parseUtcDate } from "../utils/dateTime";
+import type { ChatRoomSummary, User } from "../types";
 
-function formatMessageTime(value) {
+type ChatCardProps = {
+  room: ChatRoomSummary;
+  onDelete: (room: ChatRoomSummary) => void;
+};
+
+function formatMessageTime(value?: string | null) {
   if (!value) return "";
 
   const date = parseUtcDate(value);
@@ -17,8 +23,8 @@ function formatMessageTime(value) {
   return date.toLocaleDateString([], { month: "short", day: "numeric" });
 }
 
-export default function ChatCard({ room, onDelete }) {
-  const otherUser = room.other_user || {};
+export default function ChatCard({ room, onDelete }: ChatCardProps) {
+  const otherUser: User = room.other_user || { id: "" };
   const latestMessage = room.latest_message;
   const listingName = room.listing_name || "Listing chat";
   const otherUserName = otherUser.name || "Chat";

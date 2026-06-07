@@ -14,6 +14,12 @@ export type User = {
 };
 
 export type ListingStatus = "Available" | "Unavailable" | "Reserved" | string;
+export type ReservationStatus =
+  | "pending"
+  | "approved"
+  | "borrowed"
+  | "returned"
+  | "cancelled";
 
 export type Listing = {
   id: EntityId;
@@ -49,10 +55,12 @@ export type Review = {
 
 export type ChatMessage = {
   id: EntityId;
+  room_id?: EntityId;
   content: string;
   sender_id?: EntityId | null;
   created_at: string;
   is_read?: boolean;
+  is_system?: boolean;
   updated_at?: string | null;
 };
 
@@ -67,11 +75,16 @@ export type ChatRoomSummary = {
 export type DateRange = {
   start_date: string;
   end_date: string;
+  status?: ReservationStatus | string;
 };
 
 export type Reservation = {
   id: EntityId;
-  status?: string | null;
+  listing_id?: EntityId;
+  room_id?: EntityId;
+  borrower_id?: EntityId;
+  lender_id?: EntityId;
+  status?: ReservationStatus | null;
   borrower_calendar_added?: boolean | null;
   lender_calendar_added?: boolean | null;
   start_date?: string | null;
@@ -79,12 +92,15 @@ export type Reservation = {
 };
 
 export type ReservationContext = {
+  room_id?: EntityId;
+  listing_id?: EntityId;
   current_reservation?: Reservation | null;
   listing_name?: string | null;
   listing_status?: ListingStatus | null;
   listing_due_date?: string | null;
   borrower_id?: EntityId | null;
   lender_id?: EntityId | null;
+  current_user_role?: string | null;
   other_user?: User | null;
   blocked_ranges?: DateRange[];
 };

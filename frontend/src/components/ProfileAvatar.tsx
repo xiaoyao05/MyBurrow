@@ -1,6 +1,13 @@
 import "../styles/ProfileAvatar.css";
 import { useState } from "react";
 
+type ProfileAvatarProps = {
+    name?: string | null;
+    src?: string | null;
+    size?: "small" | "medium" | "large" | "chatHeader" | string;
+    className?: string;
+};
+
 function getProfileInitials(name = "") {
     const parts = name
         .trim()
@@ -14,7 +21,7 @@ function getProfileInitials(name = "") {
     return (parts[0] || "U").slice(0, 2).toUpperCase();
 }
 
-export default function ProfileAvatar({ name, src, size = "medium", className = "" }) {
+export default function ProfileAvatar({ name, src, size = "medium", className = "" }: ProfileAvatarProps) {
     const [failedSrc, setFailedSrc] = useState("");
     const classes = ["profile-avatar", `profile-avatar-${size}`, className]
         .filter(Boolean)

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import type { KeyboardEvent, MouseEvent, ReactNode } from "react";
 import { Link } from "react-router-dom";
 import {
   IoCalendarOutline,
@@ -14,8 +15,60 @@ import ConfirmModal from "./ConfirmModal";
 import ProfileAvatar from "./ProfileAvatar";
 import httpClient, { getWebSocketUrl } from "../httpClient";
 import { parseUtcDate } from "../utils/dateTime";
+import type {
+  ChatMessage,
+  DateRange,
+  EntityId,
+  ReservationContext,
+  ReservationStatus,
+} from "../types";
 
-function formatBubbleTime(value) {
+type ChatRoomProps = {
+  roomId: EntityId;
+  currentUserId: EntityId;
+};
+
+type CalendarMessage = {
+  type: "success" | "error";
+  text: string;
+};
+
+type MessageContextMenu = {
+  x: number;
+  y: number;
+  message: ChatMessage;
+};
+
+type ReservationAction = "approve" | "cancel" | "confirm-borrow" | "confirm-return";
+
+type PendingConfirmation = {
+  action: ReservationAction;
+  title: string;
+  message: string;
+  confirmLabel: string;
+};
+
+type ChatSocketEvent =
+  | { type: "message_updated"; message: ChatMessage }
+  | { type: "message_deleted"; message_id: EntityId }
+  | { type: "messages_read"; message_ids?: EntityId[] }
+  | ChatMessage;
+
+type CalendarEventResponse = {
+  message: string;
+  calendar_added: boolean;
+  events?: unknown[];
+};
+
+type CalendarConnectResponse = {
+  auth_url: string;
+};
+
+type AiDraftResponse = {
+  draft: string;
+};
+
+function formatBubbleTime(value?: string | null) {
   if (!value) return "";
 
   return parseUtcDate(value).toLocaleTimeString([], {
@@ -24,20 +77,20 @@ function formatBubbleTime(value) {
   });
 }
 
-function toDateKey(date) {
+function toDateKey(date: Date) {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
   return `${year}-${month}-${day}`;
 }
 
-function parseDateKey(value) {
+function parseDateKey(value?: string | null) {
   if (!value) return null;
   const [year, month, day] = value.split("-").map(Number);
   return new Date(year, month - 1, day);
 }
 
-function formatDisplayDate(value) {
+function formatDisplayDate(value?: string | null) {
   const date = parseDateKey(value);
   if (!date) return "";
 
@@ -48,7 +101,7 @@ function formatDisplayDate(value) {
   });
 }
 
-function renderMessageContent(content) {
+function renderMessageContent(content: string): ReactNode[] {
   const parts = content.split(/(\s+)/);
 
   return parts.map((part, index) => {
@@ -64,7 +117,7 @@ function renderMessageContent(content) {
   });
 }
 
-function readHiddenMessageIds(currentUserId, roomId) {
+function readHiddenMessageIds(currentUserId: EntityId, roomId: EntityId): EntityId[] {
   const storageKey = `hidden-chat-message-ids:${currentUserId}:${roomId}`;
 
   try {
@@ -75,18 +128,18 @@ function readHiddenMessageIds(currentUserId, roomId) {
   }
 }
 
-function isDateWithinRange(dateKey, range) {
+function isDateWithinRange(dateKey: string, range: DateRange) {
   return dateKey >= range.start_date && dateKey <= range.end_date;
 }
 
-function rangesOverlap(startDate, endDate, ranges) {
+function rangesOverlap(startDate: string, endDate: string, ranges: DateRange[]) {
   if (!startDate || !endDate) return false;
   return ranges.some(
     (range) => startDate <= range.end_date && endDate >= range.start_date
   );
 }
 
-function buildCalendarDays(monthDate) {
+function buildCalendarDays(monthDate: Date): Array<Date | null> {
   const year = monthDate.getFullYear();
   const month = monthDate.getMonth();
   const firstDay = new Date(year, month, 1);
@@ -105,22 +158,22 @@ function buildCalendarDays(monthDate) {
   return days;
 }
 
-const calendarEligibleStatuses = new Set(["approved", "borrowed"]);
+const calendarEligibleStatuses = new Set<ReservationStatus>(["approved", "borrowed"]);
 
-export default function ChatRoom({ roomId, currentUserId }) {
-  const [messages, setMessages] = useState([]);
+export default function ChatRoom({ roomId, currentUserId }: ChatRoomProps) {
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [message, setMessage] = useState("");
   const [aiDraft, setAiDraft] = useState("");
   const [aiDraftLoading, setAiDraftLoading] = useState(false);
-  const [aiDraftError, setAiDraftError] = useState(null);
+  const [aiDraftError, setAiDraftError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const [, setIsConnected] = useState(false);
-  const [reservationContext, setReservationContext] = useState(null);
-  const [reservationError, setReservationError] = useState(null);
+  const [reservationContext, setReservationContext] = useState<ReservationContext | null>(null);
+  const [reservationError, setReservationError] = useState<string | null>(null);
   const [reservationBusy, setReservationBusy] = useState(false);
   const [calendarBusy, setCalendarBusy] = useState(false);
-  const [calendarMessage, setCalendarMessage] = useState(() => {
+  const [calendarMessage, setCalendarMessage] = useState<CalendarMessage | null>(() => {
     const hashParams = new URLSearchParams(window.location.hash.slice(1));
     const calendarConnected = hashParams.get("calendar_connected");
     const calendarError = hashParams.get("calendar_error");
@@ -142,26 +195,26 @@ export default function ChatRoom({ roomId, currentUserId }) {
     return null;
   });
   const [isReserveOpen, setIsReserveOpen] = useState(false);
-  const [contextMenu, setContextMenu] = useState(null);
-  const [pendingMessageDelete, setPendingMessageDelete] = useState(null);
+  const [contextMenu, setContextMenu] = useState<MessageContextMenu | null>(null);
+  const [pendingMessageDelete, setPendingMessageDelete] = useState<ChatMessage | null>(null);
   const [deleteForMe, setDeleteForMe] = useState(true);
   const [deleteForOtherUser, setDeleteForOtherUser] = useState(false);
   const [messageActionBusy, setMessageActionBusy] = useState(false);
-  const [editingMessage, setEditingMessage] = useState(null);
+  const [editingMessage, setEditingMessage] = useState<ChatMessage | null>(null);
   const [hiddenMessageIds, setHiddenMessageIds] = useState(() =>
     readHiddenMessageIds(currentUserId, roomId)
   );
   const [selectedStart, setSelectedStart] = useState("");
   const [selectedEnd, setSelectedEnd] = useState("");
-  const [pendingConfirmation, setPendingConfirmation] = useState(null);
+  const [pendingConfirmation, setPendingConfirmation] = useState<PendingConfirmation | null>(null);
   const [visibleMonth, setVisibleMonth] = useState(() => {
     const today = new Date();
     return new Date(today.getFullYear(), today.getMonth(), 1);
   });
-  const socketRef = useRef(null);
+  const socketRef = useRef<WebSocket | null>(null);
   const loadingRef = useRef(true);
-  const messagesEndRef = useRef(null);
-  const composerRef = useRef(null);
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const composerRef = useRef<HTMLTextAreaElement | null>(null);
 
   const currentReservation = reservationContext?.current_reservation;
   const listingName = reservationContext?.listing_name || "Listing chat";
@@ -229,7 +282,7 @@ export default function ChatRoom({ roomId, currentUserId }) {
     const loadMessages = async () => {
       try {
         setLoading(true);
-        const res = await httpClient.get(`/api/chat/${roomId}/messages`);
+        const res = await httpClient.get<ChatMessage[]>(`/api/chat/${roomId}/messages`);
         setMessages(res.data);
         setError(null);
       } catch (err) {
@@ -244,7 +297,7 @@ export default function ChatRoom({ roomId, currentUserId }) {
 
   const loadReservationContext = useCallback(async () => {
     try {
-      const res = await httpClient.get(`/api/chat/${roomId}/reservation`);
+      const res = await httpClient.get<ReservationContext>(`/api/chat/${roomId}/reservation`);
       setReservationContext(res.data);
       setReservationError(null);
     } catch (err) {
@@ -279,9 +332,9 @@ export default function ChatRoom({ roomId, currentUserId }) {
     ws.onopen = () => setIsConnected(true);
 
     ws.onmessage = (event) => {
-      const newMessage = JSON.parse(event.data);
+      const newMessage = JSON.parse(event.data) as ChatSocketEvent;
 
-      if (newMessage.type === "message_updated") {
+      if ("type" in newMessage && newMessage.type === "message_updated") {
         setMessages((prev) =>
           prev.map((msg) =>
             msg.id === newMessage.message.id ? newMessage.message : msg
@@ -290,14 +343,14 @@ export default function ChatRoom({ roomId, currentUserId }) {
         return;
       }
 
-      if (newMessage.type === "message_deleted") {
+      if ("type" in newMessage && newMessage.type === "message_deleted") {
         setMessages((prev) =>
           prev.filter((msg) => msg.id !== newMessage.message_id)
         );
         return;
       }
 
-      if (newMessage.type === "messages_read") {
+      if ("type" in newMessage && newMessage.type === "messages_read") {
         const readMessageIds = new Set(newMessage.message_ids || []);
         setMessages((prev) =>
           prev.map((msg) =>
@@ -333,7 +386,7 @@ export default function ChatRoom({ roomId, currentUserId }) {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [sortedMessages.length]);
 
-  const hideMessageForMe = (messageId) => {
+  const hideMessageForMe = (messageId: EntityId) => {
     setHiddenMessageIds((currentIds) => {
       if (currentIds.includes(messageId)) return currentIds;
 
@@ -352,7 +405,7 @@ export default function ChatRoom({ roomId, currentUserId }) {
     if (editingMessage) {
       try {
         setMessageActionBusy(true);
-        const response = await httpClient.patch(
+        const response = await httpClient.patch<ChatMessage>(
           `/api/chat/${roomId}/messages/${editingMessage.id}`,
           { content: trimmedMessage }
         );
@@ -384,7 +437,7 @@ export default function ChatRoom({ roomId, currentUserId }) {
 
     try {
       setMessageActionBusy(true);
-      const response = await httpClient.post(`/api/chat/${roomId}/messages`, {
+      const response = await httpClient.post<ChatMessage>(`/api/chat/${roomId}/messages`, {
         content: trimmedMessage,
       });
       setMessages((prev) => {
@@ -401,7 +454,7 @@ export default function ChatRoom({ roomId, currentUserId }) {
     }
   };
 
-  const openMessageMenu = (e, msg) => {
+  const openMessageMenu = (e: MouseEvent<HTMLElement>, msg: ChatMessage) => {
     e.preventDefault();
     if (msg.is_system) {
       setContextMenu(null);
@@ -415,14 +468,14 @@ export default function ChatRoom({ roomId, currentUserId }) {
     });
   };
 
-  const startEditMessage = (msg) => {
+  const startEditMessage = (msg: ChatMessage) => {
     setEditingMessage(msg);
     setMessage(msg.content);
     setContextMenu(null);
     window.requestAnimationFrame(() => composerRef.current?.focus());
   };
 
-  const startDeleteMessage = (msg) => {
+  const startDeleteMessage = (msg: ChatMessage) => {
     setPendingMessageDelete(msg);
     setDeleteForMe(true);
     setDeleteForOtherUser(false);
@@ -459,7 +512,7 @@ export default function ChatRoom({ roomId, currentUserId }) {
       setAiDraftLoading(true);
       setAiDraftError(null);
       setAiDraft("");
-      const response = await httpClient.post("/api/ai/draft", {
+      const response = await httpClient.post<AiDraftResponse>("/api/ai/draft", {
         mode: "chat_reply",
         input: message.trim(),
         tone: "friendly",
@@ -484,20 +537,20 @@ export default function ChatRoom({ roomId, currentUserId }) {
     setAiDraftError(null);
   };
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       sendMessage();
     }
   };
 
-  const shiftVisibleMonth = (amount) => {
+  const shiftVisibleMonth = (amount: number) => {
     setVisibleMonth((current) => {
       return new Date(current.getFullYear(), current.getMonth() + amount, 1);
     });
   };
 
-  const isDateDisabled = (date) => {
+  const isDateDisabled = (date: Date) => {
     const dateKey = toDateKey(date);
 
     if (dateKey < todayKey) return true;
@@ -507,7 +560,7 @@ export default function ChatRoom({ roomId, currentUserId }) {
     return activeBlockedRanges.some((range) => isDateWithinRange(dateKey, range));
   };
 
-  const handleDateClick = (date) => {
+  const handleDateClick = (date: Date) => {
     if (isDateDisabled(date)) return;
 
     const dateKey = toDateKey(date);
@@ -546,7 +599,7 @@ export default function ChatRoom({ roomId, currentUserId }) {
     }
   };
 
-  const runReservationAction = async (action) => {
+  const runReservationAction = async (action: ReservationAction) => {
     if (!currentReservation) return;
 
     try {
@@ -574,7 +627,7 @@ export default function ChatRoom({ roomId, currentUserId }) {
   };
 
   const connectGoogleCalendar = async () => {
-    const response = await httpClient.post("/api/calendar/connect-url", {
+    const response = await httpClient.post<CalendarConnectResponse>("/api/calendar/connect-url", {
       return_path: window.location.pathname,
     });
     window.location.assign(response.data.auth_url);
@@ -586,7 +639,7 @@ export default function ChatRoom({ roomId, currentUserId }) {
     try {
       setCalendarBusy(true);
       setCalendarMessage(null);
-      const response = await httpClient.post(
+      const response = await httpClient.post<CalendarEventResponse>(
         `/api/calendar/reservations/${currentReservation.id}/event`
       );
       setCalendarMessage({

@@ -1,4 +1,12 @@
-function formatDate(iso) {
+import type { Review } from "../types";
+
+type UserReviewsProps = {
+  reviews?: Review[];
+  loading?: boolean;
+  error?: string | null;
+};
+
+function formatDate(iso?: string | null) {
   if (!iso) return "";
 
   try {
@@ -8,7 +16,7 @@ function formatDate(iso) {
   }
 }
 
-function getAverageOwnerScore(reviews) {
+function getAverageOwnerScore(reviews: Review[]) {
   const scoredReviews = reviews.filter(
     (review) => review.owner_score !== undefined && review.owner_score !== null
   );
@@ -23,7 +31,7 @@ function getAverageOwnerScore(reviews) {
   return total / scoredReviews.length;
 }
 
-export default function UserReviews({ reviews = [], loading = false, error = null }) {
+export default function UserReviews({ reviews = [], loading = false, error = null }: UserReviewsProps) {
   const averageScore = getAverageOwnerScore(reviews);
 
   return (

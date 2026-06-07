@@ -2,6 +2,17 @@ import { createPortal } from "react-dom";
 import { IoClose } from "react-icons/io5";
 import "../styles/ConfirmModal.css";
 
+type ConfirmModalProps = {
+  title: string;
+  message: string;
+  confirmLabel?: string;
+  cancelLabel?: string;
+  danger?: boolean;
+  busy?: boolean;
+  onConfirm: () => void;
+  onCancel: () => void;
+};
+
 export default function ConfirmModal({
   title,
   message,
@@ -11,7 +22,7 @@ export default function ConfirmModal({
   busy = false,
   onConfirm,
   onCancel,
-}) {
+}: ConfirmModalProps) {
   return createPortal(
     <div className="confirm-modal-backdrop" role="presentation">
       <section
