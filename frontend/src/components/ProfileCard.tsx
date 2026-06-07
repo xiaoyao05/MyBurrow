@@ -1,6 +1,17 @@
 import "../styles/ProfileCard.css";
 import ProfileAvatar from "./ProfileAvatar";
 import { FaCamera } from "react-icons/fa";
+import type { EntityId, User } from "../types";
+
+type ProfileCardProps = {
+    profile: User;
+    onEdit?: (id: EntityId) => void;
+    onDelete?: () => void;
+    onProfilePictureChange?: (file: File) => void;
+    disableEdit?: boolean;
+    disableDelete?: boolean;
+    disableProfilePictureEdit?: boolean;
+};
 
 export default function ProfileCard({
     profile,
@@ -10,8 +21,8 @@ export default function ProfileCard({
     disableEdit = false,
     disableDelete = false,
     disableProfilePictureEdit = false
-}) {
-    const p = profile || {};
+}: ProfileCardProps) {
+    const p: User = profile || { id: "" };
     return(
         <article className="profile-card">
             <div className="profile-card-header">

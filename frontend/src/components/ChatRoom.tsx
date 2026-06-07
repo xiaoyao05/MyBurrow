@@ -199,7 +199,11 @@ export default function ChatRoom({ roomId, currentUserId }) {
 
     return messages
       .filter((msg) => !hiddenIds.has(msg.id))
-      .sort((a, b) => parseUtcDate(a.created_at) - parseUtcDate(b.created_at));
+      .sort(
+        (a, b) =>
+          parseUtcDate(a.created_at).getTime() -
+          parseUtcDate(b.created_at).getTime()
+      );
   }, [hiddenMessageIds, messages]);
 
   const calendarDays = useMemo(

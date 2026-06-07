@@ -96,19 +96,19 @@ export default function MyListings() {
     }, [unauthorized]);
 
     const statusOptions = useMemo(() => {
-        const s = new Set();
+        const s = new Set<string>();
         for (const listing of listings) s.add(listing.status || "Available");
         return ["ALL", ...Array.from(s).sort()];
     }, [listings]);
 
     const categoryOptions = useMemo(() => {
-        const s = new Set();
+        const s = new Set<string>();
         for (const listing of listings) s.add(listing.category || "Other");
         return ["ALL", ...Array.from(s).sort()];
     }, [listings]);
 
     const locationOptions = useMemo(() => {
-        const s = new Set();
+        const s = new Set<string>();
         for (const listing of listings) s.add(listing.location || "Other");
         return ["ALL", ...Array.from(s).sort()];
     }, [listings]);

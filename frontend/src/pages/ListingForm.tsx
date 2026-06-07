@@ -109,7 +109,7 @@ export default function ListingForm() {
     }, []);
 
     const handleImageChange = async (event) => {
-        const files = Array.from(event.target.files || []);
+        const files = Array.from(event.target.files || []) as File[];
 
         if (files.length === 0) {
             return;

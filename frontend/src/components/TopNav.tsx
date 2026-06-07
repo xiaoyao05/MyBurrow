@@ -1,20 +1,37 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaFilter, FaSearch } from "react-icons/fa";
+import { FaFilter } from "react-icons/fa";
+import { IoSearchOutline } from "react-icons/io5";
 import MyBurrow from "/assets/MyBurrow.png";
 import "../styles/TopNav.css";
 import httpClient from "../httpClient";
 
+type TopNavProps = {
+  statusfilter?: string;
+  setStatusFilter?: (value: string) => void;
+  categoryfilter?: string;
+  setCategoryFilter?: (value: string) => void;
+  locationfilter?: string;
+  setLocationFilter?: (value: string) => void;
+  statusOptions?: string[];
+  categoryOptions?: string[];
+  locationOptions?: string[];
+  clearFilters?: () => void;
+  searchValue?: string;
+  onSearchChange?: (value: string) => void;
+  showSearch?: boolean;
+};
+
 const TopNav = ({
-  statusfilter, setStatusFilter,
-  categoryfilter, setCategoryFilter,
-  locationfilter, setLocationFilter,
+  statusfilter = "ALL", setStatusFilter = () => {},
+  categoryfilter = "ALL", setCategoryFilter = () => {},
+  locationfilter = "ALL", setLocationFilter = () => {},
   statusOptions = [], categoryOptions = [], locationOptions = [], //default to empty to avoid undefined if parent does not pass any options
-  clearFilters,
+  clearFilters = () => {},
   searchValue = "",
-  onSearchChange,
+  onSearchChange = () => {},
   showSearch = false,
-}) => {
+}: TopNavProps) => {
     const navigate = useNavigate();
     const [showFilters, setShowFilters] = useState(false);
     const filterRef = useRef(null); //useRef does not trigger re-render when updated
@@ -127,7 +144,9 @@ const TopNav = ({
         </span>
 
         {showSearch && <div className="search-bar" ref={filterRef}>
-          <FaSearch size={18} className="search-icon" />
+          <span className="search-icon">
+            <IoSearchOutline size={18} />
+          </span>
           <input
             type="search"
             placeholder="Search listings..."

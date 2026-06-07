@@ -2,7 +2,12 @@ const MAX_UPLOAD_BYTES = 2 * 1024 * 1024;
 const MAX_SOURCE_BYTES = 12 * 1024 * 1024;
 const DEFAULT_MAX_DIMENSION = 1200;
 
-function loadImage(src) {
+type PrepareImageOptions = {
+    label?: string;
+    maxDimension?: number;
+};
+
+function loadImage(src: string): Promise<HTMLImageElement> {
     return new Promise((resolve, reject) => {
         const image = new Image();
         image.onload = () => resolve(image);
@@ -11,13 +16,13 @@ function loadImage(src) {
     });
 }
 
-function canvasToBlob(canvas, quality) {
+function canvasToBlob(canvas: HTMLCanvasElement, quality: number): Promise<Blob | null> {
     return new Promise((resolve) => {
         canvas.toBlob(resolve, "image/jpeg", quality);
     });
 }
 
-export async function prepareImageFile(file, options = {}) {
+export async function prepareImageFile(file: File, options: PrepareImageOptions = {}): Promise<File> {
     const label = options.label || "Image";
     const maxDimension = options.maxDimension || DEFAULT_MAX_DIMENSION;
 
@@ -49,6 +54,9 @@ export async function prepareImageFile(file, options = {}) {
         canvas.height = height;
 
         const context = canvas.getContext("2d");
+        if (!context) {
+            throw new Error(`${label} could not be processed.`);
+        }
         context.fillStyle = "#ffffff";
         context.fillRect(0, 0, width, height);
         context.drawImage(image, 0, 0, width, height);

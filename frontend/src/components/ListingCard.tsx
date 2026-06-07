@@ -6,6 +6,29 @@ import { IoChevronBackOutline, IoChevronForwardOutline } from "react-icons/io5";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import httpClient from "../httpClient";
 import "../styles/ListingCard.css";
+import type { EntityId, Listing } from "../types";
+
+type AvailabilityChange = {
+    status: string;
+    start_date?: string;
+    end_date?: string;
+    due_date?: string | null;
+};
+
+type ListingCardProps = {
+    listing: Listing;
+    showOwner?: boolean;
+    showChat?: boolean;
+    showAvailabilityToggle?: boolean;
+    onAvailabilityChange?: (id: EntityId, availability: AvailabilityChange) => void;
+    onEdit?: (id: EntityId) => void;
+    onDelete?: (id: EntityId) => void;
+    isSaved?: boolean;
+    onToggleSave?: (id: EntityId) => void;
+    saving?: boolean;
+    busy?: boolean;
+    deleting?: boolean;
+};
 
 function formatDate(iso){
     if(!iso) return null;
@@ -52,11 +75,11 @@ export default function ListingCard({
     onDelete,
     isSaved = false,
     onToggleSave,
-    saving,
-    busy,
-    deleting
-}) {
-    const l = listing || {};
+    saving = false,
+    busy = false,
+    deleting = false
+}: ListingCardProps) {
+    const l: Listing = listing || { id: "" };
     const status = l.status || "Available";
     const todayKey = getTodayKey();
     const isReserved = status === "Reserved";
