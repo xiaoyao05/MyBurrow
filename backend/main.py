@@ -119,7 +119,7 @@ app = FastAPI(lifespan=lifespan)
 default_allowed_origins = [
     "http://localhost:5173",
     "https://myburrow.vercel.app",
-    "https://myburrow-kyet81h6c-xiaoyao05s-projects.vercel.app",
+    "https://myburrow-htkxtzleu-xiaoyao05s-projects.vercel.app",
 ]
 
 app.add_middleware(
